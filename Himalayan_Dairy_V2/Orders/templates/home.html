@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Milk System</title>
+</head>
+<body>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    {% if user.is_authenticated %}
+        <form action="{% url 'logout' %}" method="post" style="float:right;">
+            {% csrf_token %}
+            <button type="submit">Logout ({{ user.email }})</button>
+        </form>
+    {% endif %}
+
+
+
+    {% if user.is_authenticated and not user.is_staff_user %}
+        <h1>Place Your Order</h1>
+        <hr>
+        <form method="post">
+            {% csrf_token %}
+            
+            <label>Milk Type:</label>
+            <select name="milk_type" required>
+                <option value="cow">Cow Milk</option>
+                <option value="buffalo">Buffalo Milk</option>
+            </select>
+            <br><br>
+            
+            <label>Quantity (Liters):</label>
+            <input type="number" name="quantity" step="0.5" min="0.5" required>
+            <br><br>
+
+            <button type="submit">Order Milk</button>
+        </form>
+<h1>My Orders</h1>
+<hr>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Customer</th>
+                    <th>Type</th>
+                    <th>Qty</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in my_orders %}
+                <tr>
+                    <td>{{ order.user.email }}</td>
+                    <td>{{ order.milk_type }}</td>
+                    <td>{{ order.quantity }} L</td>
+                    <td>{{ order.order_at }}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="4">No orders found.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    {% elif user.is_staff_user %}
+        <h2>All Orders (Staff View)</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Customer</th>
+                    <th>Type</th>
+                    <th>Qty</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order.user.email }}</td>
+                    <td>{{ order.milk_type }}</td>
+                    <td>{{ order.quantity }} L</td>
+                    <td>{{ order.order_at }}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="4">No orders found.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+</body>
+</html>

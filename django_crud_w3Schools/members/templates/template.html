@@ -1,0 +1,78 @@
+{% load static %}
+<!DOCTYPE html>
+<html><head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+<link rel="stylesheet" href="{% static 'style.css' %}">
+<!--<link rel="stylesheet" href="{% static 'myglobal.css' %}">-->
+</head>
+<body>
+    {% include "mymenu.html" with me="Saugat" sponsor="W3SCHOOLS" %}
+<!-- This is a way to create variables in HTML using django
+    {% with firstname="Saugat" %}
+    <h1>Hello {{ firstname }}, how are you?</h1>
+    {% endwith %}-->
+    <!--If statements in Django-->
+    <!--{% if greeting == 1 %}
+    <h1>Hello</h1>
+    {%elif greeting == 2 %}
+    <h1>Welcome</h1>
+    {% else %}
+    <h1>Bye</h1>
+    {% endif %}-->
+    <!--<ul>
+      {% for x in mymembers %}
+        <li>{{ x.firstName }} {{x.lastName}}</li>
+      {% endfor %}
+    </ul>-->
+    
+    <!--{% for x in mymembers reversed %}
+     <!--{{forloop.counter}}.-->
+      <!--<p>
+         {{ x.id }}.
+         {{ x.firstName }}
+        {{ x.lastName }}
+      </p>
+        {%empty%}
+        <li>No Members</li>-->
+    <!--{% endfor %} -->
+    
+    <!--<table border='1'>
+      <tr>
+        <th>ID</th>
+        <th>Firstname</th>
+        <th>Lastname</th>
+      </tr>
+      {% for x in mymembers %}
+        <tr>
+          <td>{{ x.id }}</td>
+            <td>{{ x.firstName }}</td>
+          <td>{{ x.lastName }}</td>
+        </tr>
+      {% endfor %}
+    </table>-->
+    
+    
+    <p>The queryset object:</p>
+    {{ mymembers }}
+    
+    <p>Loop through the items:</p>
+    
+    <table border='1'>
+      <tr>
+        <th>ID</th>
+        <th>Firstname</th>
+        <th>Lastname</th>
+      </tr>
+      {% for x in mymembers %}
+        <tr>
+          <td>{{ x.id }}</td>
+          <td>{{ x.firstName }}</td>
+          <td>{{ x.lastName }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+    {% include 'footer.html' %}
+</body>
+</html>
